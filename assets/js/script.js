@@ -1,4 +1,4 @@
-
+var events = {};
 
 //display current date at the top of the app
 var today = moment().format("dddd, MMMM Do, YYYY");
