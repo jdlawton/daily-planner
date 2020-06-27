@@ -42,11 +42,21 @@ var saveEvents = function(){
 //it converts the <p> element to a <textarea> element to allow event creating/editing
 $(".time-block").on("click", ".text-box", function () {
     var text = $(this).text().trim();
+    console.log(this);
 
     var textInput = $("<textarea>").addClass("form-control").val(text);
     var replaceP = $("p", this);
     replaceP.replaceWith(textInput);
     textInput.trigger("focus");
+    if ($(this).hasClass("past")) {
+        textInput.addClass("past-textarea");
+    }
+    else if ($(this).hasClass("present")) {
+        textInput.addClass("present-textarea");
+    }
+    else if ($(this).hasClass("future")) {
+        textInput.addClass("future-textarea");
+    }
 });
 
 //event listener for the Save button. It replaces the <textarea> with a <p> element
