@@ -65,75 +65,70 @@ $(".time-block").on("click", ".text-box", function () {
 });
 
 //event listener for the Save button. It replaces the <textarea> with a <p> element
-//keeping the values from the <textarea>. It then writes the new event to the events array
-//and calls saveEvents to save the array to localStorage.
+//keeping the values from the <textarea>. If the event that is being saved is one that already exists
+//in the array, it is ignored. If the user clicks on an existing event and edits the text, the edited
+//text is updated to the schedule and the array. If the user deletes all of the text in the <textarea>
+//the event is deleted from the array. After any changes to the array are made, the saveEvents function
+//is called to save the array to localStorage
 $(".save-btn").on("click", function() {
     //get the value of the text in the <textarea> you are saving
     var eventText = $(this).siblings(".text-box").children("textarea").val();
+    //if eventText is undefined then it means either the user clicked save on an empty event or they clicked save on an event
+    //that did not have a <textarea> element, i.e. one that was not being edited, in either case, we just want to return and
+    //not do anything further.
+    if(eventText === undefined) {
+        return;
+    }
     //get the string indicating which time block was clicked on, i.e. 7 am
     var eventTime = $(this).siblings(".hour").text();
-
-    //add the new object to the events array.
-    //events.push({time: eventTime, text: eventText});
 
     //i want to only push the event to the array if it is truly a new event. If the user just 
     //updates the text, then I want to update the text in the existing array element and 
     //not add another event.
-    //debugger;
+
+    //as we iterate through the array, if we find the event being saved is not an actual new event, i.e. one being 
+    //edited or deleted, then newEvent will be flipped to false so the later push to the array will not happen.
     var newEvent = true;
+    //loop through each element of the array
     for (var i = 0; i < events.length; i++) {
+        //this will evaluate to true if we find an event in the array that has a matching time (7 am) with the 
+        //event that is being saved
         if (events[i].time === eventTime) {
-            //if events.time equals the event time, copy the event text to events.text. if there is no change
-            //to the event text, this will just overwrite for no change, otherwise, it will update the array
-            //with any new text the user entered into the event.
+                /*if (!eventText){
+                    console.log("no text");
+                    newEvent = false;
+                    //break;
+                }*/
             newEvent = false;
-            console.log("updating event text");
+            //update the text in the array with the text that is being saved, this allows us to edit the text for an existing event
             events[i].text = eventText;
+            //next we check to see if the event being saved should be deleted. eventText will be "" if the user deleted all of the text in 
+            //an existing event and saved it, so we check for that and splice the corresponding array element out of the array.
             if (eventText === ""){
-                console.log("attempting to remote element");
                 events.splice(i, 1);
                 break;
             }
         }
-        /*else {
-            events.push({time: eventTime, text: eventText});
-            break;
-        }*/
     }
 
+    //after we are done iterating through the array of existing events, if the saved event was not found, we can push it to the array
     if (newEvent === true) {
         events.push({time: eventTime, text: eventText});
     }
 
-    /*//iterate through the array and delete any elements that have bad text.
-    for (var i = 0; i < events.length; i++) {
-        if (events[i].text === "" || events[i].text === "undefined") {
-            console.log ("found something to cleanup");
-            events.splice(i, 1);
-        }
-    }*/
-
-    /*console.log("------------------");
-    console.log(events);
-    events.splice(3,1);
-    console.log(events);
-    console.log("------------------");*/
 
     //replace the <textarea> element with a <p> element
     var replaceP = $("<p>").addClass("event-text").text(eventText);
-    //console.log(replaceP);
-    //console.log($(this).siblings(".text-box").children("textarea"));
     $(this).siblings(".text-box").children("textarea").replaceWith(replaceP);
 
     //call the saveElements function to write to localStorage.
-    //console.log(events);
     saveEvents();
 });
 
-//event listener for when the user is creating/editing an event. The function will convert the 
-//<textarea> back to a <p> element 100% of the time. Additionally, if the user clicked off
-//of the <textarea> without clicking the Save button, it will revert the event text to the 
-//pre-editing value that is stored in the events array.
+//event listener for when the user is creating/editing an event. I wanted to have the text in the <textarea> revert back to a <p> element
+//in the event the <textarea> lost focus. I didn't want this to trigger a save, like clicking on the Save button, but rather discard any changes.
+//Unfortunately, I had too much trouble with the button "click" event handler and the textarea "blur" event handler stepping on each other's toes.
+//Ultimately, I had to remove the blur functionality and the <textarea> stays in place on the page until the Save button is pressed.
 /*$(".text-box").on("blur", "textarea", function() {
     var eventText = $(this).val().trim();
     var eventTime = $(this).parent(".text-box").siblings(".hour").text();
@@ -159,7 +154,6 @@ $(".save-btn").on("click", function() {
 //column that contains the text "7 am".
 var auditEvents = function (eventEl) {
 
-    
     //get the text of the element
     var timeBlock = $(eventEl).text();
     //take the time from the label and split it into an array
