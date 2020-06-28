@@ -1,3 +1,5 @@
+/* I am only documenting changes I made to the CSS*/
+
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
@@ -27,8 +29,8 @@ textarea{
 
 .time-block{
   text-align: center;
-  border-radius: 15px;
 }
+
 
 .row {
   white-space: pre-wrap;
@@ -42,22 +44,58 @@ textarea{
   border-top: 1px dashed #000000;
 }
 
+/* added padding to each column in the bootstrap row so the elements wouldn't be bumping up against the upper border*/
+.hour p {
+  padding: 10px 0 0 0;
+}
+
+.event-text {
+  text-align: left;
+  padding: 10px 0 0 0;
+}
+
+/* additional styling for the textarea to make it position it better within its column and to make it blend in better when it is in focus*/
+.text-box textarea {
+  border:none;
+  position: relative;
+  top: 10px;
+  resize: none;
+}
+
+.text-box textarea:focus {
+  border: none;
+  outline: none;
+}
+
 .past {
   background-color: #d3d3d3;
-  color: white;
+  color: black;
+}
+
+/* the past, present, and future-textarea stylings allow the background of the textarea to match the color of the event block based on the dynamic background color*/
+.past-textarea:focus {
+  background-color: #d3d3d3;
 }
 
 .present {
   background-color: #ff6961;
-  color: white;
+  color: black;
+}
+
+.present-textarea:focus {
+  background-color: #ff6961;
 }
 
 .future {
   background-color: #77dd77;
-  color: white;
+  color: black;
 }
 
-.saveBtn {
+.future-textarea:focus {
+  background-color: #77dd77;
+}
+
+.save-btn {
   border-left: 1px solid black;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
@@ -65,7 +103,14 @@ textarea{
   color: white;
 }
 
-.saveBtn i:hover {
-  font-size: 20px;
+/* additinal styling to better position the icon/text on the button and to make it transition when hovered over*/
+.save-btn span {
+  padding: 22px 0 0 0;
+}
+
+.save-btn:hover {
+  color: black;
+  background-color: #09819c;
   transition: all .3s ease-in-out;
 }
+
