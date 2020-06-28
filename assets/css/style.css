@@ -1,3 +1,5 @@
+/* I am only documenting changes I made to the CSS*/
+
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
@@ -42,6 +44,7 @@ textarea{
   border-top: 1px dashed #000000;
 }
 
+/* added padding to each column in the bootstrap row so the elements wouldn't be bumping up against the upper border*/
 .hour p {
   padding: 10px 0 0 0;
 }
@@ -51,9 +54,9 @@ textarea{
   padding: 10px 0 0 0;
 }
 
+/* additional styling for the textarea to make it position it better within its column and to make it blend in better when it is in focus*/
 .text-box textarea {
   border:none;
-  /*padding: 10px 0 0 0;*/
   position: relative;
   top: 10px;
   resize: none;
@@ -69,6 +72,7 @@ textarea{
   color: black;
 }
 
+/* the past, present, and future-textarea stylings allow the background of the textarea to match the color of the event block based on the dynamic background color*/
 .past-textarea:focus {
   background-color: #d3d3d3;
 }
@@ -99,6 +103,7 @@ textarea{
   color: white;
 }
 
+/* additinal styling to better position the icon/text on the button and to make it transition when hovered over*/
 .save-btn span {
   padding: 22px 0 0 0;
 }

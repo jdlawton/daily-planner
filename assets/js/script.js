@@ -196,10 +196,10 @@ var auditEvents = function (eventEl) {
 loadEvents();
 
 //sets a timer to evaluate the events and make color coding adjustments
-//it is set to run every 10 minutes
+//it is set to run every 5 minutes
 var timer = setInterval(function() {
     $(".hour").each(function() {
         auditEvents(this);
         //clearInterval(timer);
     });
-}, 600000);
+}, 300000);
