@@ -1,6 +1,7 @@
 # Work Day Scheduler Starter
 
 The live application deployment link is:
+https://jdlawton.github.io/daily-planner/
 
 The GitHub repo link is:
 https://github.com/jdlawton/daily-planner
